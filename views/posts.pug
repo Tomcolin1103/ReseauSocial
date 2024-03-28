@@ -1,6 +1,8 @@
 extends layout 
-block content 
-    each val in result
-        h1 #{val.pseudo}
-        h3 #{val.content}
-        h5 #{val.date}
+block content
+    each post in result
+        div(class="post")
+            a(href=`/posts/${post.postId}`)
+                h1 #{post.pseudo}
+                h3 #{post.content}
+                h5 #{post.date}

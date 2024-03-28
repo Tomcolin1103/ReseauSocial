@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const usersService = require("../services/users.service");
 const registerValidator = require("../validators/register.validator");
 const authValidator = require("../validators/auth.validator");
+const renderController = require("./render.controller");
 const jwt = require("jsonwebtoken");
 
 const userController = {
@@ -36,7 +37,7 @@ const userController = {
 			res.sendStatus(500);
 		}
 	},
-	login: async (req, res) => {
+	login: async (req, res, next) => {
 		try {
 			const validationResult = await authValidator.validate(req.body);
 			if (validationResult.error) {
@@ -51,7 +52,6 @@ const userController = {
 			} else {
 				if (user.JWT !== null) {
 					res.setHeader("authorization", `Bearer ${user.JWT}`);
-					return;
 				}
 				const payload = {
 					userId: user.id,
@@ -66,7 +66,7 @@ const userController = {
 				return res
 					.setHeader("Authorization", `Bearer ${token}`)
 					.render("success");
-				console.log(req.header);
+				next();
 			}
 		} catch (err) {
 			console.error(err);

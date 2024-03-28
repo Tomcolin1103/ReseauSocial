@@ -1,0 +1,16 @@
+extends layout 
+block content 
+    h1 #{post.pseudo}
+    h3 #{post.content}
+    h5 #{post.date}
+    form(action=`/posts/${postId}` method="post")
+        textarea(name="content", placeholder="Enter a comment", cols="50", rows="4")
+        br
+        input(name="userId" type="text", placeholder="userId")
+        br
+        input(type="submit" value="Comment")
+    br
+    each comment in comments
+        h3 #{comment.pseudo}
+        h5 #{comment.content}
+        h7 #{comment.date}

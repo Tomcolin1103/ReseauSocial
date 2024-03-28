@@ -21,6 +21,7 @@ nav ul li {
 
 nav ul li a {
 	text-decoration: none;
+	color: black;
 }
 
 /* Login */
@@ -41,4 +42,15 @@ nav ul li a {
 
 .inputRegister .input {
 	margin-top: 2%;
+}
+
+/* Posts */
+.post {
+	text-align: center;
+	border: solid black;
+}
+
+.post a {
+	text-decoration: none;
+	color: black;
 }
