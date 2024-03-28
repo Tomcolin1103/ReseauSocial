@@ -1,0 +1,44 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+/* Navbar */
+nav {
+	width: 100%;
+}
+
+nav ul {
+	display: flex;
+	justify-content: center;
+}
+
+nav ul li {
+	padding-left: 5%;
+	padding-right: 5%;
+	list-style-type: none;
+}
+
+nav ul li a {
+	text-decoration: none;
+}
+
+/* Login */
+.inputLogin {
+	margin-top: 10%;
+	text-align: center;
+}
+
+.inputLogin .input {
+	margin-top: 2%;
+}
+
+/* Register */
+.inputRegister {
+	margin-top: 10%;
+	text-align: center;
+}
+
+.inputRegister .input {
+	margin-top: 2%;
+}

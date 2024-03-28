@@ -1,0 +1,15 @@
+extends layout
+block content
+    div(class="inputLogin")
+        form(action="/users/login" method="post")
+            div(class="input")
+                label(for="inputEmail") Email
+                br
+                input(type="email" id="inputEmail" name="email")
+                br
+            div(class="input")
+                label(for="inputPassword") Password
+                br
+                input(type="password" id="inputPassword" name="password")
+            div(class="input")
+                input(type="submit" value="Login")

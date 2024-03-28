@@ -1,0 +1,22 @@
+doctype html 
+html 
+    head 
+        title Twitter 
+        body 
+            link(rel="stylesheet" href="/css/main.css")
+            header
+            //- NAVBAR
+            nav(class="navbar")
+                ul
+                    li
+                        a(href="/") Home
+                    li 
+                        a(href="/posts/") Posts
+                    li
+                        a(href="/users/login") Login
+                    li
+                        a(href="/users/register") Register
+            main 
+                block content 
+
+include footer 

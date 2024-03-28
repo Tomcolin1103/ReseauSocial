@@ -1,0 +1,21 @@
+extends layout
+block content
+    div(class="inputRegister")
+        form(action="/users/register" method="post")
+            div(class="input")
+                label(for="inputEmail") Email
+                br
+                input(type="email" id="inputEmail" name="email")
+                br
+            div(class="input")
+                label(for="inputPassword") Password
+                br
+                input(type="password" id="inputPassword" name="password")
+                br
+            div(class="input")
+                label(for="inputPseudo") Pseudo 
+                br
+                input(type="text" id="inputPseudo" name="pseudo")
+                br
+            div(class="input")
+                input(type="submit" value="Register")

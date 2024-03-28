@@ -1,0 +1,6 @@
+extends layout 
+block content 
+    each val in result
+        h1 #{val.pseudo}
+        h3 #{val.content}
+        h5 #{val.date}
