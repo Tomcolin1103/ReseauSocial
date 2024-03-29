@@ -2,7 +2,6 @@ const bcrypt = require("bcrypt");
 const usersService = require("../services/users.service");
 const registerValidator = require("../validators/register.validator");
 const authValidator = require("../validators/auth.validator");
-const renderController = require("./render.controller");
 const jwt = require("jsonwebtoken");
 
 const userController = {
@@ -47,27 +46,59 @@ const userController = {
 			const { email, password } = validationResult;
 			const user = await usersService.login(email, password);
 
+			const secretKey = process.env.JWT_SECRET;
+
 			if (!user) {
 				return res.status(401).json({ message: "Invalid Password" });
 			} else {
 				if (user.JWT !== null) {
-					res.setHeader("authorization", `Bearer ${user.JWT}`);
+					res.setHeader("Authorization", `Bearer ${user.JWT}`);
+					next();
+					//res.redirect("/");
+					return;
 				}
 				const payload = {
-					userId: user.id,
 					email: user.email,
+					password: user.password,
+					userId: user.id,
 				};
-				const options = {
-					expiresIn: "5s",
-				};
-				const secret = process.env.JWT_SECRET;
-				const token = jwt.sign(payload, secret, options);
+				const token = jwt.sign(payload, secretKey, { expiresIn: "2d" });
 				const addToken = usersService.updateJwt(user.id, token);
-				return res
-					.setHeader("Authorization", `Bearer ${token}`)
-					.render("success");
+				console.log("Je suis ici");
+				res.setHeader("authorization", `Bearer ${token}`);
+				res.status(200).json({ msg: "newToken" });
 				next();
 			}
+
+			// const token = jwt.sign(payload, secretKey, { expiresIn: "2d" });
+			// if (token && user.JWT === token) {
+			// 	res.status(200).json({ msg: "Bon token" });
+			// } else {
+			// 	res
+			// 		.status(403)
+			// 		.json({ msg: "mauvais token", token1: token, token2: user.JWT });
+			// }
+
+			// if (!user) {
+			// 	return res.status(401).json({ message: "Invalid Password" });
+			// } else {
+			// 	if (user.JWT !== null) {
+			// 		return res.setHeader("authorization", `Bearer ${user.JWT}`);
+			// 	}
+			// 	const payload = {
+			// 		userId: user.id,
+			// 		email: user.email,
+			// 	};
+			// 	const options = {
+			// 		expiresIn: "5s",
+			// 	};
+			// 	const secret = process.env.JWT_SECRET;
+			// 	const token = jwt.sign(payload, secret, options);
+			// 	const addToken = usersService.updateJwt(user.id, token);
+			// 	return res
+			// 		.setHeader("Authorization", `Bearer ${token}`)
+			// 		.render("success");
+			// }
 		} catch (err) {
 			console.error(err);
 		}

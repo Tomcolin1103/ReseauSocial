@@ -79,6 +79,19 @@ const usersService = {
 			console.error(err);
 		}
 	},
+	getByMail: async (email) => {
+		try {
+			await sql.connect(sqlConfig);
+
+			const result =
+				await sql.query`SELECT * FROM Users WHERE email = ${email}`;
+			if (result.recordset.length > 0) {
+				return result.recordset;
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	},
 };
 
 module.exports = usersService;

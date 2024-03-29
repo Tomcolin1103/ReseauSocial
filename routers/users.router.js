@@ -5,7 +5,7 @@ const jwtVerification = require("../middlewares/jwtVerification");
 userRouter
 	.route("/login")
 	.get(userController.getLogin)
-	.post(jwtVerification, userController.login);
+	.post(jwtVerification, userController.login, jwtVerification);
 
 userRouter
 	.route("/register")
