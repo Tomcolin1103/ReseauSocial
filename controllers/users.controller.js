@@ -42,7 +42,6 @@ const userController = {
 			if (validationResult.error) {
 				return res.status(400).json({ error: validationResult.error });
 			}
-
 			const { email, password } = validationResult;
 			const user = await usersService.login(email, password);
 
@@ -51,23 +50,21 @@ const userController = {
 			if (!user) {
 				return res.status(401).json({ message: "Invalid Password" });
 			} else {
-				if (user.JWT !== null) {
-					res.setHeader("Authorization", `Bearer ${user.JWT}`);
-					next();
-					//res.redirect("/");
-					return;
+				let token;
+				if (user.jwt !== null) {
+					token = user.jwt
 				}
 				const payload = {
 					email: user.email,
 					password: user.password,
 					userId: user.id,
 				};
-				const token = jwt.sign(payload, secretKey, { expiresIn: "2d" });
-				const addToken = usersService.updateJwt(user.id, token);
-				console.log("Je suis ici");
-				res.setHeader("authorization", `Bearer ${token}`);
-				res.status(200).json({ msg: "newToken" });
-				next();
+				token = jwt.sign(payload, secretKey, { expiresIn: "2d" });
+				const addToken = await usersService.updateJwt(user.id, token);
+				req.session.user = { id: user.id, token: token };
+
+				// redirect to homepage
+				res.redirect('/');
 			}
 
 			// const token = jwt.sign(payload, secretKey, { expiresIn: "2d" });

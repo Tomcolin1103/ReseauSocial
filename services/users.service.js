@@ -21,7 +21,7 @@ const usersService = {
 				.input("hashedPassword", sql.NVarChar, hashedPassword)
 				.input("pseudo", sql.NVarChar, pseudo)
 				.query(
-					"INSERT INTO users (email, hashedPassword, pseudo) VALUES (@email, @hashedPassword, @pseudo)"
+					"INSERT INTO users (email, password, pseudo) VALUES (@email, @hashedPassword, @pseudo)"
 				);
 
 			return insertNewUser;
@@ -40,7 +40,7 @@ const usersService = {
 
 			if (result.recordset.length > 0) {
 				const user = result.recordset[0];
-				const matchPassword = bcrypt.compareSync(password, user.hashedPassword);
+				const matchPassword = bcrypt.compareSync(password, user.password);
 				if (matchPassword) {
 					return user;
 				}
